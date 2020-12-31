@@ -105,3 +105,6 @@ dist
 
 # Compiled typscript
 build
+
+# Database
+database.sqlite
