@@ -5,7 +5,7 @@ export class Setup extends Command {
   constructor() {
     super({
       name: "setup",
-      description: "[Admin Only] Setup/change bot settings",
+      description: "**[Admin Only]** Setup/change bot settings",
       subcommands: [ProposalsChannel, RulesChannel]
     });
   }
@@ -19,9 +19,9 @@ function save(msg: CommandMessage, args: string[], column: string) {
     msg.reply("You must be an administrator to use this command");
     return;
   }
-  // I'll have to change this when I make it so you can change prefix
-  const newValue = Number(args[0]);
-  const guild = Number(msg.guild.id);
+
+  const newValue = args[0];
+  const guild = msg.guild.id;
 
   knex('settings').insert({
     id: guild,

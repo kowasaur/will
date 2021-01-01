@@ -3,10 +3,10 @@ import { knex } from "./database.js";
 
 knex.schema.dropTableIfExists('settings').then(() => {
   knex.schema.createTable('settings', (table:CreateTableBuilder) => {
-    table.integer('id').primary();
+    table.text('id').primary();
     table.text('prefix').defaultTo(';');
-    table.integer('proposalsChannel');
-    table.integer('rulesChannel');
+    table.text('proposalsChannel');
+    table.text('rulesChannel');
   })
     .then(() => {
       console.log('success');
