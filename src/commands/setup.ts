@@ -6,22 +6,20 @@ export class Setup extends Command {
     super({
       name: "setup",
       description: "**[Admin Only]** Setup/change bot settings",
-      subcommands: [ProposalsChannel, RulesChannel]
+      subcommands: [ProposalsChannel, RulesChannel],
+      dmAllowed: false
     });
   }
 }
 
 function save(msg: CommandMessage, args: string[], column: string) {
-  if (!msg.guild) {
-    msg.reply("You can't use this command in DMs");
-    return;
-  } else if (!msg.member?.hasPermission('ADMINISTRATOR')) {
+  if (!msg.member?.hasPermission('ADMINISTRATOR')) {
     msg.reply("You must be an administrator to use this command");
     return;
   }
 
   const newValue = args[0];
-  const guild = msg.guild.id;
+  const guild = msg.guild!.id;
 
   knex('settings').insert({
     id: guild,
