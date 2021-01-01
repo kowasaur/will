@@ -1,0 +1,35 @@
+{
+	"Proposal Template": {
+		"prefix": "propo",
+		"body": [
+			"import { Client, CommandMessage, Validator } from 'its-not-commando';",
+			"import { Proposal } from '../proposal';",
+			"",
+			"export class ${1/(.*)/${1:/capitalize}/} extends Proposal {",
+			"  constructor() {",
+			"    super({",
+			"      name: '${1}',",
+			"      description: '$2',",
+			"      arguments: [{",
+			"        name: '$3',$0",
+			// "        validator: Validator.User",
+			"      }]",
+			"    })",
+			"  }",
+			"",
+			"  async run(msg: CommandMessage, args: string[], client: Client) {",
+			"    this.createProposal(msg, args, client, `${1/(.*)/${1:/capitalize}/}`, async () => {",
+			"      try {",
+			"        // await ",
+			"        return 'success';",
+			"      } catch {",
+			"        return '```fix\\nI am missing the permission(s) neccessary to execute the proposal```';",
+			"      }",
+			"    });",
+			"  }",
+			"}",
+			""
+		],
+		"description": "Proposal Template"
+	}
+}

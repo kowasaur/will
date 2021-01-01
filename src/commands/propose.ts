@@ -1,4 +1,5 @@
 import { Command } from "its-not-commando";
+import { Ban } from "./proposals/ban";
 import { Kick } from "./proposals/kick";
 
 export class Propose extends Command{
@@ -6,7 +7,7 @@ export class Propose extends Command{
     super({
       name: "propose",
       description: "Propose a change to the server",
-      subcommands: [Kick],
+      subcommands: [Kick, Ban],
       dmAllowed: false
     })
   }

@@ -1,10 +1,10 @@
 import { SubCommand, SubCommandOptions, CommandMessage, Client } from "its-not-commando"
-import { MessageEmbed, TextChannel } from "discord.js";
+import { MessageEmbed, TextChannel, GuildMember } from "discord.js";
 import colors from "discordjs-colors";
 import { knex } from "../database"
 
 export abstract class Proposal extends SubCommand {
-  constructor(private options: SubCommandOptions) {
+  constructor(options: SubCommandOptions) {
     super({
       name: options.name,
       description: options.description,
@@ -18,6 +18,13 @@ export abstract class Proposal extends SubCommand {
 
   public lastArrayElement(array: any[]) {
     return array[array.length - 1]
+  }
+
+  public notMember(msg: CommandMessage, member: GuildMember | null) {
+    if (!member) {
+      msg.reply("that user could not be found");
+      return true;
+    } else return false;
   }
 
   public async createProposal (msg: CommandMessage, args: string[], client: Client, embedTitle: string, successFunction: () => Promise<"success" | string>) {
@@ -53,9 +60,6 @@ export abstract class Proposal extends SubCommand {
         .setTimestamp()
 
       if (approveCount > disapproveCount) {
-        // member.kick(reason ?? "Successful Proposal").catch(e => {
-        //   pChannel.send("```fix\nI am missing the permission(s) neccessary to execute the proposal```")
-        // })
         const errorMessage = await successFunction()
         if (errorMessage !== "success") {
           pChannel.send(errorMessage);
