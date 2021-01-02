@@ -50,5 +50,16 @@
 			""
 		],
 		"description": "SubCommand Template"
+	},
+	"Document Command": {
+		"prefix": "doccom",
+		"body": [
+			"### ;$1",
+			"${2:description}  ",
+			"**Usage:** `;$1 $3`  ",
+			"**Example:**  `;$1 $4`  ",
+			"$0"
+		],
+		"description": "Document Command"
 	}
 }
