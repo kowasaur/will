@@ -8,7 +8,7 @@ export class RoleCommand extends SubCommand{
     super({
       name: 'role',
       description: 'Modify a role',
-      subcommands: [RoleCreate]
+      subcommands: [RoleCreate, RoleGive]
     });
   };
 }
@@ -95,5 +95,45 @@ export class RoleCreate extends Proposal {
         return '```fix\nAn error occurred. Execution unsuccessful```';
       }
     }, otherFields);
+  }
+}
+
+
+export class RoleGive extends Proposal {
+  constructor() {
+    super({
+      name: 'give',
+      description: 'Give a role to someone',
+      arguments: [
+        {
+          name: 'user',
+          validator: Validator.User
+        },
+        {
+          name: 'role',
+          validator: Validator.Role
+        }
+      ]
+    })
+  }
+
+  async run(msg: CommandMessage, args: string[], client: Client) {
+    const guild = msg.guild!;
+    const role = guild.roles.cache.get(args[1])
+    const user = guild.member(args[0]);
+
+    if (!role) {
+      msg.reply("Role not found");
+      return;
+    }
+
+    this.createProposal(msg, args, client, `Give ${user?.displayName} the @${role.name} role`, async () => {
+      try {
+        await user?.roles.add(role)
+        return 'success';
+      } catch {
+        return '```fix\nAn error occurred. Execution unsuccessful```';
+      }
+    });
   }
 }
