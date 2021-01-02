@@ -23,7 +23,8 @@ class RuleAdd extends Proposal {
       description: 'Add a rule (use hyphens (-) instead of a spaces for the rule)',
       arguments: [{
         name: 'rule',
-      }]
+      }],
+      importance: 'medium'
     })
   }
 

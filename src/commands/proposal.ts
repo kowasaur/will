@@ -3,8 +3,40 @@ import { MessageEmbed, TextChannel, GuildMember, EmbedFieldData } from "discord.
 import colors from "discordjs-colors";
 import { knex } from "../database"
 
+type importance = 'low' | 'medium' | 'high' | 'variable'
+
+type ProposalOptions = SubCommandOptions & {
+  importance: importance
+};
+
+type importanceValues = {
+  [key in importance]: {
+    seconds: number | undefined;
+    color: any;
+  };
+};
+
+const importanceValues: importanceValues = {
+  low: {
+    seconds: 3,
+    color: colors.gold
+  },
+  medium: {
+    seconds: 5,
+    color: colors.orange
+  },
+  high: {
+    seconds: 10,
+    color: colors.red
+  },
+  variable: {
+    seconds: undefined,
+    color: undefined
+  }
+}
+
 export abstract class Proposal extends SubCommand {
-  constructor(options: SubCommandOptions) {
+  constructor(private options: ProposalOptions) {
     super({
       name: options.name,
       description: options.description,
@@ -31,9 +63,16 @@ export abstract class Proposal extends SubCommand {
     } else return false;
   }
 
-  public async createProposal (msg: CommandMessage, args: string[], client: Client, embedTitle: string, successFunction: () => Promise<"success" | string>, otherFields?: EmbedFieldData[]) {
+  public async createProposal (msg: CommandMessage, args: string[], client: Client, embedTitle: string, successFunction: () => Promise<"success" | string>, otherFields?: EmbedFieldData[], imp?: importance) {
     const guild = msg.guild!
     const reason = this.lastArrayElement(args)
+
+    let importance = this.options.importance
+    if (importance === 'variable' && imp) {
+      importance = imp
+    }
+    const time = importanceValues[importance].seconds
+    const color = importanceValues[importance].color
 
     const proposalsId: string = (await knex('settings')
       .where('id', guild.id)
@@ -41,7 +80,7 @@ export abstract class Proposal extends SubCommand {
     const pChannel = client.channels.cache.get(proposalsId) as TextChannel
 
     const embed = new MessageEmbed()
-      .setColor(colors.randomColor()) 
+      .setColor(color) 
       .setTitle(embedTitle)
       .setAuthor(`${msg.author.username}'s Proposal`, msg.author.avatarURL() || undefined)
       .setDescription(reason ?? "")
@@ -78,7 +117,7 @@ export abstract class Proposal extends SubCommand {
           .addField("Fail", "This proposal failed to pass")
       }
       message.edit(embed)
-    }, 3 * 1000)
+    }, time! * 1000)
   }
 
 }

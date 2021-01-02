@@ -6,6 +6,7 @@ export class Ban extends Proposal {
     super({
       name: 'ban',
       description: 'Ban a user from the server (delete max 7 days messages)',
+      importance: 'high',
       arguments: [
         {
           name: 'user',

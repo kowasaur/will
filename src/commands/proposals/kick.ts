@@ -6,6 +6,7 @@ export class Kick extends Proposal {
     super({
       name: "kick",
       description: "Kick a user from the server",
+      importance: 'medium',
       arguments: [{
         name: "user",
         validator: Validator.User

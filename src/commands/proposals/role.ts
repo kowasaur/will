@@ -20,6 +20,7 @@ export class RoleCreate extends Proposal {
     super({
       name: 'create',
       description: 'Create a new role',
+      importance: 'low',
       arguments: [
         { name: 'name' },
         { 
@@ -34,6 +35,12 @@ export class RoleCreate extends Proposal {
         },
         {
           name: 'mentionable',
+          validator: CustomValidator.BetterBoolean,
+          optional: true
+        },
+        // this means display separately
+        {
+          name: 'hoist',
           validator: CustomValidator.BetterBoolean,
           optional: true
         }
@@ -77,6 +84,12 @@ export class RoleCreate extends Proposal {
         value: args[3]
       })
     }
+    if (args[4]) {
+      otherFields.push({
+        name: "Hoist",
+        value: args[4]
+      })
+    }
 
     this.createProposal(msg, args, client, `Create Role "${name}"`, async () => {
       try {
@@ -86,6 +99,7 @@ export class RoleCreate extends Proposal {
             color: args[1],
             position: Number(args[2]),
             mentionable: (args[3] == "true"),
+            hoist: (args[4] == "true"),
             permissions: acceptablePerms as unknown as PermissionString
           },
           reason: this.lastArrayElement(args)
@@ -104,6 +118,7 @@ export class RoleGive extends Proposal {
     super({
       name: 'give',
       description: 'Give a role to someone',
+      importance: 'variable',
       arguments: [
         {
           name: 'user',
@@ -127,6 +142,11 @@ export class RoleGive extends Proposal {
       return;
     }
 
+    const perms = role.permissions.toArray().toString();
+    const field = perms ? [{ name: "Permissions", value: perms }] : undefined
+
+    const importance = role.permissions.has('ADMINISTRATOR') ? 'high' : 'medium'
+
     this.createProposal(msg, args, client, `Give ${user?.displayName} the @${role.name} role`, async () => {
       try {
         await user?.roles.add(role)
@@ -134,6 +154,6 @@ export class RoleGive extends Proposal {
       } catch {
         return '```fix\nAn error occurred. Execution unsuccessful```';
       }
-    });
+    }, field, importance);
   }
 }
