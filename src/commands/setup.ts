@@ -55,6 +55,7 @@ class RulesChannel extends SubCommand {
         name: "channel",
         validator: Validator.Channel
       }],
+      aliases: ["rule"],
     })
   }
 

@@ -7,6 +7,7 @@ knex.schema.dropTableIfExists('settings').then(() => {
     table.text('prefix').defaultTo(';');
     table.text('proposalsChannel');
     table.text('rulesChannel');
+    table.text('lastRule')
   })
     .then(() => {
       console.log('success');

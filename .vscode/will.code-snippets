@@ -2,7 +2,7 @@
 	"Proposal Template": {
 		"prefix": "propo",
 		"body": [
-			"import { Client, CommandMessage, Validator } from 'its-not-commando';",
+			"import { Client, CommandMessage } from 'its-not-commando';",
 			"import { Proposal } from '../proposal';",
 			"",
 			"export class ${1/(.*)/${1:/capitalize}/} extends Proposal {",
@@ -23,7 +23,7 @@
 			"        // await ",
 			"        return 'success';",
 			"      } catch {",
-			"        return '```fix\\nI am missing the permission(s) neccessary to execute the proposal```';",
+			"        return '```fix\\nAn error occurred. Execution unsuccessful```';",
 			"      }",
 			"    });",
 			"  }",
@@ -31,5 +31,23 @@
 			""
 		],
 		"description": "Proposal Template"
+	},
+	"SubCommand Template": {
+		"prefix": "subcom",
+		"body": [
+			"import { SubCommand } from \"its-not-commando\";",
+			"",
+			"class ${1/(.*)/${1:/capitalize}/} extends SubCommand{",
+			"  constructor() {",
+			"    super({",
+			"      name: '$1',",
+			"      description: '$2',",
+			"      $0",
+			"    });",
+			"  };",
+			"}",
+			""
+		],
+		"description": "SubCommand Template"
 	}
 }

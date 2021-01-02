@@ -34,7 +34,7 @@ export abstract class Proposal extends SubCommand {
     const proposalsId: string = (await knex('settings')
       .where('id', guild.id)
       .pluck('proposalsChannel'))[0]
-    const pChannel = await client.channels.cache.get(proposalsId) as TextChannel
+    const pChannel = client.channels.cache.get(proposalsId) as TextChannel
 
     const embed = new MessageEmbed()
       .setColor(colors.randomColor()) 
