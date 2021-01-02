@@ -1,5 +1,5 @@
 import { SubCommand, SubCommandOptions, CommandMessage, Client } from "its-not-commando"
-import { MessageEmbed, TextChannel, GuildMember } from "discord.js";
+import { MessageEmbed, TextChannel, GuildMember, EmbedFieldData } from "discord.js";
 import colors from "discordjs-colors";
 import { knex } from "../database"
 
@@ -20,6 +20,10 @@ export abstract class Proposal extends SubCommand {
     return array[array.length - 1]
   }
 
+  public hyphenToSpace(str: string) {
+    return str.replace(/-/g, " ");
+  }
+
   public notMember(msg: CommandMessage, member: GuildMember | null) {
     if (!member) {
       msg.reply("that user could not be found");
@@ -27,7 +31,7 @@ export abstract class Proposal extends SubCommand {
     } else return false;
   }
 
-  public async createProposal (msg: CommandMessage, args: string[], client: Client, embedTitle: string, successFunction: () => Promise<"success" | string>) {
+  public async createProposal (msg: CommandMessage, args: string[], client: Client, embedTitle: string, successFunction: () => Promise<"success" | string>, otherFields?: EmbedFieldData[]) {
     const guild = msg.guild!
     const reason = this.lastArrayElement(args)
 
@@ -45,7 +49,10 @@ export abstract class Proposal extends SubCommand {
       .setFooter("Ends")
       // I need to make this say when it ends
       // .setTimestamp()
-
+    if (otherFields) {
+      embed.addFields(otherFields)
+    }
+      
     const message = await pChannel.send(embed);
     message.react('✅')
     message.react('❎')

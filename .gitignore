@@ -108,3 +108,5 @@ build
 
 # Database
 database.sqlite
+
+.DS_Store

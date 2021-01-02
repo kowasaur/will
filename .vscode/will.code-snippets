@@ -37,7 +37,7 @@
 		"body": [
 			"import { SubCommand } from \"its-not-commando\";",
 			"",
-			"class ${1/(.*)/${1:/capitalize}/} extends SubCommand{",
+			"export class ${1/(.*)/${1:/capitalize}/} extends SubCommand{",
 			"  constructor() {",
 			"    super({",
 			"      name: '$1',",

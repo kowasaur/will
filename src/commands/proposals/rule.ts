@@ -29,7 +29,7 @@ class RuleAdd extends Proposal {
 
   async run(msg: CommandMessage, args: string[], client: Client) {
     const guild = msg.guild!;
-    const rule = args[0].replace(/-/g, " ")
+    const rule = this.hyphenToSpace(args[0])
 
     this.createProposal(msg, args, client, `Add Rule "${rule}"`, async () => {
       try {
