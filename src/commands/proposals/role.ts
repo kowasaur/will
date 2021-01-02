@@ -147,7 +147,7 @@ export class RoleGive extends Proposal {
 
     const importance = role.permissions.has('ADMINISTRATOR') ? 'high' : 'medium'
 
-    this.createProposal(msg, args, client, `Give ${user?.displayName} the @${role.name} role`, async () => {
+    this.createProposal(msg, args, client, `Give ${user?.displayName} the ${role.name} role`, async () => {
       try {
         await user?.roles.add(role)
         return 'success';

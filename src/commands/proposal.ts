@@ -63,7 +63,7 @@ export abstract class Proposal extends SubCommand {
     } else return false;
   }
 
-  public async createProposal (msg: CommandMessage, args: string[], client: Client, embedTitle: string, successFunction: () => Promise<"success" | string>, otherFields?: EmbedFieldData[], imp?: importance) {
+  public async createProposal (msg: CommandMessage, args: string[], client: Client, embedTitle: string, successFunction: () => Promise<"success" | string>, otherFields?: EmbedFieldData[], imp?: importance, thumbnail?: string) {
     const guild = msg.guild!
     const reason = this.lastArrayElement(args)
 
@@ -90,6 +90,9 @@ export abstract class Proposal extends SubCommand {
       // .setTimestamp()
     if (otherFields) {
       embed.addFields(otherFields)
+    }
+    if (thumbnail) {
+      embed.setThumbnail(thumbnail);
     }
       
     const message = await pChannel.send(embed);

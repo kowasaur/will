@@ -10,7 +10,7 @@
 			"    super({",
 			"      name: '${1}',",
 			"      description: '$2',",
-			"      importance: '$3'",
+			"      importance: '$3',",
 			"      arguments: [{",
 			"        name: '$4',$0",
 			// "        validator: Validator.User",
