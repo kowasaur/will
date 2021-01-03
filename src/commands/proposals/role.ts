@@ -49,7 +49,7 @@ export class RoleCreate extends Proposal {
   }
 
   async run(msg: CommandMessage, args: string[], client: Client) {
-    const input = await msg.prompt("What permissions do you want the role to have? (refer to here: https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS; say none for none)")
+    const input = await msg.prompt("What permissions do you want the role to have? (comma separated; refer to here: https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS; say none for none)")
     const permissions = input?.replace(/\s/g,'').toUpperCase().split(",")
 
     const acceptablePerms = permissions?.filter(perm => {
