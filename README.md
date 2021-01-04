@@ -10,7 +10,6 @@
 The WiLL role must have Adminstrator and be above all other roles to function correctly 
 
 # To Do
-- Make max and min in ;poll show *all* values (make it work for ties)
 - Handle errors
 
 # Commands

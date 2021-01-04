@@ -85,8 +85,18 @@ export class Poll extends Command{
         .setColor(blue)
 
       if (counts.length > 2) {
-        const most = options[counts.indexOf(Math.max(...counts))]
-        const least = options[counts.indexOf(Math.min(...counts))]
+        // https://stackoverflow.com/a/41271541/13837629
+        function countsOptionsValues(value:number) {
+          const x =  counts.map((val, index) => val === value ? index : "")
+            .filter(String) as number[]
+          return x.map(i => options[i]).join(", ")
+        }
+
+        const max = Math.max(...counts)
+        const min = Math.min(...counts)
+
+        const most = countsOptionsValues(max)
+        const least = countsOptionsValues(min)
 
         embed.addFields(
           { name: "Most Popular", value: most},
