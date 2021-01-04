@@ -2,7 +2,7 @@ import { SubCommand, SubCommandOptions, CommandMessage, Client } from "its-not-c
 import { MessageEmbed, TextChannel, GuildMember, EmbedFieldData } from "discord.js";
 import colors from "discordjs-colors";
 import { knex } from "../database"
-import { lastArrayElement } from "../utility";
+import { lastArrayElement, timeMinutesLater } from "../utility";
 
 type importance = 'low' | 'medium' | 'high' | 'variable'
 
@@ -79,8 +79,7 @@ export abstract class Proposal extends SubCommand {
       .setDescription(reason ?? "")
       // .addField("Reason", "React with ✅ to approve. React with ❎ to disapprove.")
       .setFooter("Ends")
-      // I need to make this say when it ends
-      // .setTimestamp()
+      .setTimestamp(timeMinutesLater((time ?? 0) / 60))
     if (otherFields) {
       embed.addFields(otherFields)
     }

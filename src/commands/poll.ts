@@ -2,7 +2,7 @@ import { Client, MessageEmbed, TextChannel } from "discord.js";
 import { blue } from "discordjs-colors";
 import { Command, CommandMessage, Validator } from "its-not-commando";
 import { knex } from "../database";
-import { hyphenToSpace } from "../utility";
+import { hyphenToSpace, timeMinutesLater } from "../utility";
 
 const emojiNumbers = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
 
@@ -67,6 +67,7 @@ export class Poll extends Command{
       .setAuthor(`${msg.author.username}'s Poll`, msg.author.avatarURL() || undefined)
       .setFooter("Ends")
       .setDescription(description)
+      .setTimestamp(timeMinutesLater(minutes))
 
     const emojis = options.map((_, index) => emojiNumbers[index]);
 
