@@ -11,7 +11,7 @@ The WiLL role must have Adminstrator and be above all other roles to function co
 
 # To Do
 - Make max and min in ;poll show *all* values (make it work for ties)
-- Remove all reactions after completion for polls and proposals
+- Handle errors
 
 # Commands
 **Note:** parameters in <> are mandatory and parameters in [] are optional

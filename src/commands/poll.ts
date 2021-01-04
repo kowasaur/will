@@ -1,5 +1,5 @@
 import { Client, MessageEmbed, TextChannel } from "discord.js";
-import { blue } from "discordjs-colors";
+import { aqua, blue } from "discordjs-colors";
 import { Command, CommandMessage, Validator } from "its-not-commando";
 import { knex } from "../database";
 import { hyphenToSpace, timeMinutesLater } from "../utility";
@@ -62,7 +62,7 @@ export class Poll extends Command{
     const pChannel = client.channels.cache.get(pollsId) as TextChannel
 
     const embed = new MessageEmbed()
-      .setColor(blue)
+      .setColor(aqua)
       .setTitle(question)
       .setAuthor(`${msg.author.username}'s Poll`, msg.author.avatarURL() || undefined)
       .setFooter("Ends")
@@ -78,16 +78,24 @@ export class Poll extends Command{
       const cache = message.reactions.cache;
       const counts = emojis.map(emoji => (cache.get(emoji)?.count ?? 0) - 1)
       const result = emojis.map((e, index) => `${e}: ${counts[index]}`).join("\n")
-      
-      const most = options[counts.indexOf(Math.max(...counts))]
-      const least = options[counts.indexOf(Math.min(...counts))]
 
-      embed.addFields(
-        { name: "Results", value: result},
-        { name: "Most Popular", value: most},
-        { name: "Lease Popular", value: least},
-      ).setFooter("Ended").setTimestamp()
+      embed.addField("Results", result)
+        .setFooter("Ended")
+        .setTimestamp()
+        .setColor(blue)
+
+      if (counts.length > 2) {
+        const most = options[counts.indexOf(Math.max(...counts))]
+        const least = options[counts.indexOf(Math.min(...counts))]
+
+        embed.addFields(
+          { name: "Most Popular", value: most},
+          { name: "Least Popular", value: least},
+        )
+      } 
+      
       message.edit(embed)
+      message.reactions.removeAll()
     }, minutes * 60 * 1000);
   }
 }
