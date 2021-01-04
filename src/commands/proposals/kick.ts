@@ -1,4 +1,5 @@
 import { Client, CommandMessage, Validator } from "its-not-commando";
+import { lastArrayElement } from "../../utility";
 import { Proposal } from "../proposal";
 
 export class Kick extends Proposal {
@@ -20,7 +21,7 @@ export class Kick extends Proposal {
 
     this.createProposal(msg, args, client, `Kick ${member!.displayName}`, async () => {
       try {
-        await member!.kick(this.lastArrayElement(args) ?? "Successful Proposal");
+        await member!.kick(lastArrayElement(args) ?? "Successful Proposal");
         return "success";
       } catch {
         return "```fix\nI am missing the permission(s) neccessary to execute the proposal```";

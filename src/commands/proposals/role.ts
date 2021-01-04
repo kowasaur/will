@@ -1,6 +1,7 @@
 import { EmbedFieldData, Permissions, PermissionString } from "discord.js";
 import { Client, CommandMessage, SubCommand, Validator } from "its-not-commando";
 import { CustomValidator } from "../../customValidator";
+import { hyphenToSpace, lastArrayElement } from "../../utility";
 import { Proposal } from '../proposal';
 
 export class RoleCommand extends SubCommand{
@@ -57,7 +58,7 @@ export class RoleCreate extends Proposal {
     })
     
     const guild = msg.guild!;
-    const name = this.hyphenToSpace(args[0])
+    const name = hyphenToSpace(args[0])
     
     let otherFields: EmbedFieldData[] = [];
     if (acceptablePerms?.length) {
@@ -102,7 +103,7 @@ export class RoleCreate extends Proposal {
             hoist: (args[4] == "true"),
             permissions: acceptablePerms as unknown as PermissionString
           },
-          reason: this.lastArrayElement(args)
+          reason: lastArrayElement(args)
         })
         return 'success';
       } catch {

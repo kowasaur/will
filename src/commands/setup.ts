@@ -6,7 +6,7 @@ export class Setup extends Command {
     super({
       name: "setup",
       description: "**[Admin Only]** Setup/change bot settings",
-      subcommands: [ProposalsChannel, RulesChannel],
+      subcommands: [ProposalsChannel, RulesChannel, PollsChannel],
       dmAllowed: false
     });
   }
@@ -61,5 +61,22 @@ class RulesChannel extends SubCommand {
 
   async run(msg: CommandMessage, args: string[]) {
     save(msg, args, 'rulesChannel');
+  }
+}
+
+class PollsChannel extends SubCommand {
+  constructor() {
+    super({
+      name: "polls",
+      description: "Change the channel where polls are posted",
+      arguments: [{ 
+        name: "channel",
+        validator: Validator.Channel
+      }]
+    })
+  }
+
+  async run(msg: CommandMessage, args: string[]) {
+    save(msg, args, 'pollsChannel');
   }
 }

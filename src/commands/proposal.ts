@@ -2,6 +2,7 @@ import { SubCommand, SubCommandOptions, CommandMessage, Client } from "its-not-c
 import { MessageEmbed, TextChannel, GuildMember, EmbedFieldData } from "discord.js";
 import colors from "discordjs-colors";
 import { knex } from "../database"
+import { lastArrayElement } from "../utility";
 
 type importance = 'low' | 'medium' | 'high' | 'variable'
 
@@ -48,14 +49,6 @@ export abstract class Proposal extends SubCommand {
     })
   }
 
-  public lastArrayElement(array: any[]) {
-    return array[array.length - 1]
-  }
-
-  public hyphenToSpace(str: string) {
-    return str.replace(/-/g, " ");
-  }
-
   public notMember(msg: CommandMessage, member: GuildMember | null) {
     if (!member) {
       msg.reply("that user could not be found");
@@ -65,7 +58,7 @@ export abstract class Proposal extends SubCommand {
 
   public async createProposal (msg: CommandMessage, args: string[], client: Client, embedTitle: string, successFunction: () => Promise<"success" | string>, otherFields?: EmbedFieldData[], imp?: importance, thumbnail?: string) {
     const guild = msg.guild!
-    const reason = this.lastArrayElement(args)
+    const reason = lastArrayElement(args)
 
     let importance = this.options.importance
     if (importance === 'variable' && imp) {

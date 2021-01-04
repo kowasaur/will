@@ -1,4 +1,5 @@
 import { Client, CommandMessage, Validator } from 'its-not-commando';
+import { lastArrayElement } from '../../utility';
 import { Proposal } from '../proposal';
 
 export class Ban extends Proposal {
@@ -29,7 +30,7 @@ export class Ban extends Proposal {
       try {
         await member!.ban({
           days: Number(args[1]),
-          reason: this.lastArrayElement(args) ?? "Successful Proposal"
+          reason: lastArrayElement(args) ?? "Successful Proposal"
         })  
         return 'success';
       } catch {

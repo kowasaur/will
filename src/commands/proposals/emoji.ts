@@ -1,5 +1,6 @@
 import { SubCommand } from "its-not-commando";
 import { Client, CommandMessage } from 'its-not-commando';
+import { lastArrayElement } from "../../utility";
 import { Proposal } from '../proposal';
 
 export class Emoji extends SubCommand{
@@ -39,7 +40,7 @@ export class Create extends Proposal {
     
     this.createProposal(msg, args, client, `Create new emoji :${args[0]}:`, async () => {
       try {
-        await guild.emojis.create(image.proxyURL, args[0], { reason: this.lastArrayElement(args) })
+        await guild.emojis.create(image.proxyURL, args[0], { reason: lastArrayElement(args) })
         return 'success';
       } catch {
         return '```fix\nAn error occurred. Execution unsuccessful```';

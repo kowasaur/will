@@ -3,6 +3,7 @@ import { blurple } from 'discordjs-colors';
 import { Client, CommandMessage } from 'its-not-commando';
 import { SubCommand } from "its-not-commando";
 import { knex } from '../../database';
+import { hyphenToSpace } from '../../utility';
 import { Proposal } from '../proposal';
 
 export class Rule extends SubCommand{
@@ -30,7 +31,7 @@ class RuleAdd extends Proposal {
 
   async run(msg: CommandMessage, args: string[], client: Client) {
     const guild = msg.guild!;
-    const rule = this.hyphenToSpace(args[0])
+    const rule = hyphenToSpace(args[0])
 
     this.createProposal(msg, args, client, `Add Rule "${rule}"`, async () => {
       try {
