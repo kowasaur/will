@@ -7,7 +7,8 @@
 [Invite Link](https://discord.com/oauth2/authorize?client_id=794073147288190981&permissions=8&scope=bot)
 
 # Use
-The WiLL role must have Adminstrator and be above all other roles to function correctly 
+The WiLL role must have Adminstrator and be above all other roles to function correctly  
+If you want to make a category, make a channel with the type, `category`
 
 # Commands
 **Note:** parameters in <> are mandatory and parameters in [] are optional
