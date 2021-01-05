@@ -9,7 +9,7 @@ export class RoleCommand extends SubCommand{
     super({
       name: 'role',
       description: 'Modify a role',
-      subcommands: [RoleCreate, RoleGive, RoleDelete]
+      subcommands: [RoleCreate, RoleGive, RoleDelete, RoleRemove]
     });
   };
 }
@@ -191,5 +191,45 @@ export class RoleDelete extends Proposal {
         return '```fix\nAn error occurred. Execution unsuccessful```';
       }
     }, undefined, importance);
+  }
+}
+
+class RoleRemove extends Proposal {
+  constructor() {
+    super({
+      name: 'remove',
+      description: 'Remove a role from a user',
+      importance: 'high',
+      arguments: [
+        {
+          name: 'user',
+          validator: Validator.User
+        },
+        {
+          name: 'role',
+          validator: Validator.Role
+        }
+      ]
+    })
+  }
+
+  async run(msg: CommandMessage, args: string[], client: Client) {
+    const guild = msg.guild!;
+    const role = guild.roles.cache.get(args[1])
+    const user = guild.member(args[0]);
+
+    if (!role) {
+      msg.reply("Role not found");
+      return;
+    }
+
+    this.createProposal(msg, args, client, `Remove the "${role.name}" role from ${user?.displayName}`, async () => {
+      try {
+        await user?.roles.remove(role)
+        return 'success';
+      } catch {
+        return '```fix\nAn error occurred. Execution unsuccessful```';
+      }
+    });
   }
 }
