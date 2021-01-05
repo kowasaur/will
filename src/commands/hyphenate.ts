@@ -13,7 +13,7 @@ export class Hyphenate extends Command {
     })
   }
 
-  async run(msg: CommandMessage, args: string[], client: Client) {
+  async run(msg: CommandMessage, args: string[]) {
     msg.say(args[0].replace(/\s/g, "-"));
   }
 }
