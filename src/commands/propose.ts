@@ -13,7 +13,8 @@ export class Propose extends Command{
       description: "Propose a change to the server",
       subcommands: [Kick, Ban, Rule, RoleCommand, Emoji, Channel],
       dmAllowed: false,
-      examples: [['propose rule add No-NSFW-except-in-#NSFW i don\'t wanna see that', 'Creates a proposal to add the rule "No NSFW except in #NSFW" with the reason "i dont\'t wanna see that"']],
+      examples: [['propose rule add No-spam-except-in-#spam No one wants to be annoyed', 
+      'Creates a proposal to add the rule "No spam except in #spam" with the reason "No one wants to be annoyed"']],
     })
   }
 }

@@ -16,7 +16,7 @@ export class RoleCommand extends SubCommand{
 
 const flags = Object.keys(Permissions.FLAGS)
 
-export class RoleCreate extends Proposal {
+class RoleCreate extends Proposal {
   constructor() {
     super({
       name: 'create',
@@ -114,7 +114,7 @@ export class RoleCreate extends Proposal {
 }
 
 
-export class RoleGive extends Proposal {
+class RoleGive extends Proposal {
   constructor() {
     super({
       name: 'give',
@@ -159,7 +159,7 @@ export class RoleGive extends Proposal {
   }
 }
 
-export class RoleDelete extends Proposal {
+class RoleDelete extends Proposal {
   constructor() {
     super({
       name: 'delete',

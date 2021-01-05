@@ -14,7 +14,7 @@ export class Emoji extends SubCommand{
   };
 }
 
-export class Create extends Proposal {
+class Create extends Proposal {
   constructor() {
     super({
       name: 'create',
@@ -50,7 +50,7 @@ export class Create extends Proposal {
   }
 }
 
-export class Delete extends Proposal {
+class Delete extends Proposal {
   constructor() {
     super({
       name: 'delete',

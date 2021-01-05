@@ -1,4 +1,4 @@
-import { Client, Command, CommandMessage } from "its-not-commando";
+import { Command, CommandMessage } from "its-not-commando";
 
 export class Hyphenate extends Command {
   constructor() {

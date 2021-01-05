@@ -11,7 +11,8 @@ The WiLL role must have Adminstrator and be above all other roles to function co
 If you want to make a category, make a channel with the type, `category`
 
 # Commands
-**Note:** parameters in <> are mandatory and parameters in [] are optional
+**Note:** parameters in <> are mandatory and parameters in [] are optional  
+***This list is not finished***
 
 ## ;ping
 Ping the bot to check if the bot is still alive
