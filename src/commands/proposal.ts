@@ -112,7 +112,7 @@ export abstract class Proposal extends SubCommand {
           .addField("Fail", "This proposal failed to pass")
       }
       message.edit(embed)
-      message.reactions.removeAll()
+      message.reactions.removeAll().catch(() => {return})
     }, time! * 1000)
   }
 

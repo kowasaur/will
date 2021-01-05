@@ -105,7 +105,7 @@ export class Poll extends Command{
       } 
       
       message.edit(embed)
-      message.reactions.removeAll()
+      message.reactions.removeAll().catch(() => {return})
     }, minutes * 60 * 1000);
   }
 }
