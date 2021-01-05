@@ -6,6 +6,13 @@
 
 [Invite Link](https://discord.com/oauth2/authorize?client_id=794073147288190981&permissions=8&scope=bot)
 
+This bot carries out the will of the people. The primary feature is the 
+;propose command which sends a proposal to make a change to the server; for example, 
+adding an emoji. Proposals are of different importance depending on how significant the 
+thing that is being proposed is. A higher importance means it will take longer to finalise. 
+You can tell the importance of a proposal by the colour: red is high, orange is medium and 
+yellow is low. If you want to report an error or suggestion, use the ;report command.
+
 # Use
 The WiLL role must have Adminstrator and be above all other roles to function correctly  
 If you want to make a category, make a channel with the type, `category`

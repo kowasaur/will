@@ -7,6 +7,7 @@ import { Propose } from "./commands/propose";
 import { Setup } from "./commands/setup";
 import { Hyphenate } from "./commands/hyphenate"
 import { Report } from "./commands/report";
+import { Info } from "./commands/info";
 
 const client = new Client({
   owner: process.env.DISCORDJS_BOT_OWNER!,
@@ -14,7 +15,7 @@ const client = new Client({
   token: process.env.DISCORDJS_BOT_TOKEN!
 });
 
-client.registry.registerCommands([Setup, Propose, Poll, Hyphenate, Report])
+client.registry.registerCommands([Setup, Propose, Poll, Hyphenate, Report, Info])
 
 client.start()
 
