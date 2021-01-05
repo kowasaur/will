@@ -9,12 +9,12 @@ export class Channel extends SubCommand{
     super({
       name: 'channel',
       description: 'Manage a channel',
-      subcommands: [Create]
+      subcommands: [Create, Delete]
     });
   };
 }
 
-export class Create extends Proposal {
+class Create extends Proposal {
   constructor() {
     super({
       name: 'create',
@@ -45,7 +45,7 @@ export class Create extends Proposal {
 
     const category = guild.channels.cache.find(cat => cat.name.toLowerCase() === args[2].toLowerCase())
     
-    let otherFields: EmbedFieldData[] = [{name: "type", value: type}];
+    let otherFields: EmbedFieldData[] = [{name: "Type", value: type}];
 
     if (category) {
       otherFields.push({ name: "Category", value: category.name})
@@ -63,5 +63,31 @@ export class Create extends Proposal {
         return '```fix\nAn error occurred. Execution unsuccessful```';
       }
     }, otherFields);
+  }
+}
+
+class Delete extends Proposal {
+  constructor() {
+    super({
+      name: 'delete',
+      description: 'Delete a channel',
+      importance: 'high',
+      arguments: [{
+        name: 'channel',
+        validator: Validator.Channel
+      }]
+    })
+  }
+
+  async run(msg: CommandMessage, args: string[], client: Client) {
+    const channel = msg.guild?.channels.cache.get(args[0])
+    this.createProposal(msg, args, client, `Delete #${channel?.name}`, async () => {
+      try {
+        await channel?.delete()
+        return 'success';
+      } catch {
+        return '```fix\nAn error occurred. Execution unsuccessful```';
+      }
+    });
   }
 }
