@@ -1,6 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { purple } from "discordjs-colors";
 import { Command, CommandMessage } from "its-not-commando";
+const version = require('../../package.json').version
 
 export class Info extends Command {
   constructor() {
@@ -15,7 +16,8 @@ export class Info extends Command {
     const embed = new MessageEmbed()
       .setColor(purple)
       .setTitle("Info")
-      .setDescription(`This bot carries out the will of the people. The primary feature is the \
+      .setDescription(`**Version: ** ${version}
+        This bot carries out the will of the people. The primary feature is the \
         ;propose command which sends a proposal to make a change to the server; for example, \
         adding an emoji. Proposals are of different importance depending on how significant the \
         thing that is being proposed is. A higher importance means it will take longer to finalise. \

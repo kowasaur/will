@@ -16,18 +16,18 @@ type importanceValues = {
     color: any;
   };
 };
-// TODO: make these suitable values
+
 const importanceValues: importanceValues = {
   low: {
-    seconds: 3,
+    seconds: 60 * 60,
     color: colors.gold
   },
   medium: {
-    seconds: 5,
+    seconds: 60 * 60 * 12,
     color: colors.orange
   },
   high: {
-    seconds: 10,
+    seconds: 60 * 60 * 48,
     color: colors.red
   },
   variable: {
@@ -46,7 +46,7 @@ export abstract class Proposal extends SubCommand {
         multi: true,
         optional: true
       }],
-      // TODO: rateLimit (as well as on poll)
+      rateLimit: { max: 10, seconds: 60 * 60 }
     })
   }
 

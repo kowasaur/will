@@ -43,7 +43,8 @@ export class Poll extends Command{
           name: "option5",
           optional: true
         },
-      ]
+      ],
+      rateLimit: { max: 10, seconds: 60 * 30 }
     })
   }
 
