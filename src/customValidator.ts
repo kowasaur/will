@@ -29,5 +29,9 @@ export const CustomValidator = {
     } else {
       return null;
     }
+  },
+  CustomEmoji: (arg: string) => {
+    return (/^<:\S+:\d+>$/.test(arg)) ?
+      arg.match(/\d+/)![0] : null
   }
 }

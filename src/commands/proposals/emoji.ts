@@ -1,5 +1,6 @@
 import { SubCommand } from "its-not-commando";
 import { Client, CommandMessage } from 'its-not-commando';
+import { CustomValidator } from "../../customValidator";
 import { lastArrayElement } from "../../utility";
 import { Proposal } from '../proposal';
 
@@ -8,7 +9,7 @@ export class Emoji extends SubCommand{
     super({
       name: 'emoji',
       description: 'Modify emojis',
-      subcommands: [Create]
+      subcommands: [Create, Delete]
     });
   };
 }
@@ -46,5 +47,39 @@ export class Create extends Proposal {
         return '```fix\nAn error occurred. Execution unsuccessful```';
       }
     }, undefined, undefined, image.proxyURL);
+  }
+}
+
+export class Delete extends Proposal {
+  constructor() {
+    super({
+      name: 'delete',
+      description: 'Delete a custom emoji',
+      importance: 'medium',
+      arguments: [{
+        name: 'emoji',
+        validator: CustomValidator.CustomEmoji
+      }]
+    })
+  }
+
+  async run(msg: CommandMessage, args: string[], client: Client) {
+    const guild = msg.guild!;
+    const emoji = guild.emojis.cache.get(args[0])
+
+    // Discord nitro users can use emojis from other servers
+    if (!emoji) {
+      msg.reply("Emoji not found");
+      return;
+    }
+    
+    this.createProposal(msg, args, client, `Delete :${emoji.name}: emoji`, async () => {
+      try {
+        await emoji.delete(args[1])
+        return 'success';
+      } catch {
+        return '```fix\nAn error occurred. Execution unsuccessful```';
+      }
+    }, undefined, undefined, emoji.url);
   }
 }
