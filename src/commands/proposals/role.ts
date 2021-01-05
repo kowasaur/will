@@ -9,7 +9,7 @@ export class RoleCommand extends SubCommand{
     super({
       name: 'role',
       description: 'Modify a role',
-      subcommands: [RoleCreate, RoleGive]
+      subcommands: [RoleCreate, RoleGive, RoleDelete]
     });
   };
 }
@@ -94,7 +94,7 @@ export class RoleCreate extends Proposal {
 
     this.createProposal(msg, args, client, `Create Role "${name}"`, async () => {
       try {
-        guild.roles.create({
+        await guild.roles.create({
           data: {
             name: name,
             color: args[1],
@@ -148,7 +148,7 @@ export class RoleGive extends Proposal {
 
     const importance = role.permissions.has('ADMINISTRATOR') ? 'high' : 'medium'
 
-    this.createProposal(msg, args, client, `Give ${user?.displayName} the ${role.name} role`, async () => {
+    this.createProposal(msg, args, client, `Give ${user?.displayName} the "${role.name}" role`, async () => {
       try {
         await user?.roles.add(role)
         return 'success';
@@ -156,5 +156,40 @@ export class RoleGive extends Proposal {
         return '```fix\nAn error occurred. Execution unsuccessful```';
       }
     }, field, importance);
+  }
+}
+
+export class RoleDelete extends Proposal {
+  constructor() {
+    super({
+      name: 'delete',
+      description: 'Delete a role',
+      importance: 'variable',
+      arguments: [{
+        name: 'role',
+        validator: Validator.Role
+      }]
+    })
+  }
+
+  async run(msg: CommandMessage, args: string[], client: Client) {
+    const guild = msg.guild!;
+    const role = guild.roles.cache.get(args[0])
+
+    if (!role) {
+      msg.reply("Role not found");
+      return;
+    }
+
+    const importance = role.permissions.has('ADMINISTRATOR') ? 'high' : 'medium'
+
+    this.createProposal(msg, args, client, `Delete the "${role.name}" role`, async () => {
+      try {
+        await role.delete(args[1])
+        return 'success';
+      } catch {
+        return '```fix\nAn error occurred. Execution unsuccessful```';
+      }
+    }, undefined, importance);
   }
 }
