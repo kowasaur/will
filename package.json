@@ -7,7 +7,8 @@
     "start": "nodemon .",
     "live": "node .",
     "watch": "tsc -w",
-    "reset": "node build/reset.js"
+    "reset": "node build/reset.js",
+    "init": "node build/init.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "its-not-commando": "^2.0.0",
     "knex": "^0.21.15",
     "moment": "^2.29.1",
+    "prompt-sync": "^4.2.0",
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
